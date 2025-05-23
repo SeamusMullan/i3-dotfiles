@@ -1,0 +1,33 @@
+dotfiles/
+├── install.sh                          # Main install script
+├── README.md                           # Setup instructions
+├── config/
+│   ├── i3/
+│   │   └── config                      # i3 window manager config
+│   ├── kitty/
+│   │   └── kitty.conf                  # Terminal configuration
+│   ├── polybar/
+│   │   ├── config.ini                  # Polybar configuration
+│   │   └── launch.sh                   # Polybar launch script
+│   ├── picom/
+│   │   └── picom.conf                  # Compositor for transparency
+│   ├── rofi/
+│   │   ├── config.rasi                 # Rofi launcher theme
+│   │   ├── themes/
+│   │   │   └── powermenu.rasi          # Power menu theme
+│   │   └── scripts/
+│   │       └── powermenu.sh            # Power menu script
+│   ├── zsh/
+│   │   └── .zshrc                      # Zsh configuration
+│   ├── wal/
+│   │   └── templates/
+│   │       └── colors-rofi-dark.rasi   # Pywal rofi template
+│   └── gtk-3.0/
+│       └── settings.ini                # GTK theme settings
+├── scripts/
+│   ├── theme-update.sh                 # Theme switching script
+│   └── monitor-setup.sh                # Monitor configuration
+├── wallpapers/
+│   └── default.jpg                     # Default wallpaper
+└── fonts/
+    └── install-fonts.sh                # Font installation script
