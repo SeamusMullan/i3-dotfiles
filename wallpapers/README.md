@@ -6,7 +6,7 @@ My personal wallpaper collection that fits best to tiling window managers.
 
 Clone the directory from your home directory.
 
-```
+```text
 cd
 git clone --depth=1 https://github.com/mylinuxforwork/wallpaper.git
 cd wallpaper/
@@ -16,12 +16,13 @@ cd wallpaper/
 
 You can update the wallpapers with
 
-```
+```text
 cd ~/wallpaper
 git pull
 ```
+
 ## Wallpaper Resources
 
-https://www.reddit.com/r/wallpapers/
+<https://www.reddit.com/r/wallpapers/>
 
-https://4kwallpapers.com
+<https://4kwallpapers.com>
