@@ -1,8 +1,5 @@
 #!/bin/bash
-
-# Comprehensive i3 + Pywal Setup Install Script
-# Author: Seamu
-# Description: Installs and configures a complete i3 desktop environment
+# Author: Seamus Mullan
 
 set -e
 
@@ -38,11 +35,9 @@ check_arch() {
     fi
 }
 
-# Install packages
 install_packages() {
     print_status "Installing required packages..."
     
-    # Core packages
     local packages=(
         # Window manager and tools
         "i3-wm" "i3status" "i3lock" "dmenu"
@@ -61,7 +56,6 @@ install_packages() {
         "autorandr" "xorg-xrandr" "git" "curl" "wget"
     )
     
-    # Install official packages
     sudo pacman -S --needed "${packages[@]}"
     
     # Install AUR packages if yay is available
@@ -102,7 +96,6 @@ backup_configs() {
     done
 }
 
-# Install configurations
 install_configs() {
     print_status "Installing configuration files..."
     
@@ -133,14 +126,10 @@ install_configs() {
     print_success "Configuration files installed"
 }
 
-# Install fonts
 install_fonts() {
     print_status "Installing additional fonts..."
-    
-    # Create fonts directory
     mkdir -p ~/.local/share/fonts
-    
-    # Download and install JetBrains Mono Nerd Font if not available
+
     if ! fc-list | grep -i "jetbrains.*nerd" &> /dev/null; then
         print_status "Downloading JetBrains Mono Nerd Font..."
         wget -q "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip" -O /tmp/JetBrainsMono.zip
@@ -150,11 +139,10 @@ install_fonts() {
     fi
 }
 
-# Setup shell
 setup_shell() {
     print_status "Setting up Zsh and Oh My Zsh..."
     
-    # Install Oh My Zsh if not present
+    # Install Oh My Zsh
     if [[ ! -d ~/.oh-my-zsh ]]; then
         sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     fi
@@ -163,10 +151,10 @@ setup_shell() {
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 2>/dev/null || true
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 2>/dev/null || true
     
-    # Install Powerlevel10k theme
+    # Powerlevel10k theme
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k 2>/dev/null || true
     
-    # Change default shell to zsh
+    # Change default shell
     if [[ "$SHELL" != "$(which zsh)" ]]; then
         print_status "Changing default shell to zsh..."
         chsh -s "$(which zsh)"
@@ -174,48 +162,35 @@ setup_shell() {
     fi
 }
 
-# Setup default wallpaper and theme
 setup_theme() {
     print_status "Setting up default theme..."
     
-    # Copy default wallpaper
     if [[ -f "$SCRIPT_DIR/wallpapers/default.jpg" ]]; then
         cp "$SCRIPT_DIR/wallpapers/default.jpg" ~/Pictures/wallpapers/
         
-        # Generate initial theme
         wal -i ~/Pictures/wallpapers/default.jpg
-        
-        # Update theme
         ~/.local/bin/theme-update.sh ~/Pictures/wallpapers/default.jpg
     else
         print_warning "No default wallpaper found. Please run theme-update.sh with your wallpaper"
     fi
 }
 
-# Setup monitor configuration
 setup_monitors() {
     print_status "Setting up monitor configuration..."
-    
-    # Detect monitors and create autorandr profile
     if command -v autorandr &> /dev/null; then
         print_status "Autorandr available. You can setup monitor profiles with 'autorandr --save <profile-name>'"
     fi
 }
 
-# Set file manager as default
 setup_file_manager() {
     print_status "Setting Thunar as default file manager..."
     xdg-mime default thunar.desktop inode/directory
 }
 
-# Final setup
 final_setup() {
     print_status "Performing final setup..."
-    
-    # Update font cache
     fc-cache -fv
     
-    # Set GTK theme
     gsettings set org.gnome.desktop.interface gtk-theme "Materia-dark" 2>/dev/null || true
     gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark" 2>/dev/null || true
     gsettings set org.gnome.desktop.interface color-scheme "prefer-dark" 2>/dev/null || true
@@ -223,7 +198,6 @@ final_setup() {
     print_success "Setup completed!"
 }
 
-# Print post-install instructions
 print_instructions() {
     print_success "Installation completed successfully!"
     echo
@@ -250,7 +224,6 @@ print_instructions() {
     echo -e "${GREEN}Enjoy your new setup!${NC}"
 }
 
-# Main execution
 main() {
     print_status "Starting i3 + Pywal setup installation..."
     
@@ -268,5 +241,4 @@ main() {
     print_instructions
 }
 
-# Run main function
 main "$@"
